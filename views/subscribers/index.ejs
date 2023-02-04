@@ -1,0 +1,34 @@
+<h2>Subscibers Table</h2>
+<table class="table">
+    <caption>subscribers</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Zip Code</th>
+      <th>VIP</th>
+      <th>Phone Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% subscribers.forEach(subscriber => { %>
+    <tr>
+      <td>
+        <%= subscriber.name %>
+      </td>
+      <td>
+        <%= subscriber.email %>
+      </td>
+      <td>
+        <%= subscriber.zipCode %>
+      </td>
+      <td>
+        <%= subscriber.vip %>
+      </td>
+      <td>
+        <%= subscriber.phonenumber %>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
