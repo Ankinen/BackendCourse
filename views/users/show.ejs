@@ -37,12 +37,17 @@
   
   <% if (user.subscribedAccount) { %>
   <h4 class="center"> This user has a
-    <a href="<%=`/subscribers/${user.subscribedAccount}` %>">
+    <a href="<%= `/subscribers/${user.subscribedAccount}` %>">
       subscribed account</a>.
   </h4>
   <% } %>
   
   
-  <div class="center">
+  <div>
     <a class="button" href="/users">View all users</a>
+  
+    <a class="button" href="<%= `/users/${user._id}/edit`%>">Edit User Details</a>
+
+    <a class="button" href="<%= `/users/${user._id}/delete?_method=DELETE` %>" 
+      onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
   </div>
