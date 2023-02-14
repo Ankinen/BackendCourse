@@ -12,6 +12,7 @@ const layouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
 const Subscriber = require("./models/subscriber");
 const Recipe = require("./models/recipe");
+const methodOverride = require("method-override");
 
 // This lets mongoose know that we want to use native ES6 promises
 mongoose.Promise = global.Promise;
@@ -33,6 +34,7 @@ app.use("/", router);
 router.use(layouts);
 router.use(express.static("public"));
 router.use(express.urlencoded({ extended: false }));
+router.use(methodOverride("_method", { methods: ["POST", "GET"] }));
 router.use(express.json());
 router.use(homeController.logRequestPaths);
 
