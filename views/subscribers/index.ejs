@@ -1,13 +1,15 @@
 <h2>Subscibers Table</h2>
 <table class="table">
-    <caption>subscribers</caption>
+    <caption></caption>
   <thead>
     <tr>
       <th>Name</th>
       <th>Email</th>
+      <th>Phone Number</th>
       <th>Zip Code</th>
       <th>VIP</th>
-      <th>Phone Number</th>
+      <th>Edit</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -20,13 +22,20 @@
         <%= subscriber.email %>
       </td>
       <td>
+        <%= subscriber.phonenumber %>
+      </td>
+      <td>
         <%= subscriber.zipCode %>
       </td>
       <td>
         <%= subscriber.vip %>
       </td>
       <td>
-        <%= subscriber.phonenumber %>
+        <a href="<%= `subscribers/${subscriber._id}/edit` %>">Edit</a>
+      </td>
+      <td>
+        <a href="<%= `subscribers/${subscriber._id}/delete?_method=DELETE` %>" 
+            onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
       </td>
     </tr>
     <% }); %>

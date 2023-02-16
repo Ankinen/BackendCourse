@@ -16,7 +16,7 @@ const subscriberSchema = new mongoose.Schema({
 });
 
 subscriberSchema.methods.getInfo = function() {
-    return `Name: ${this.name} Email: ${this.email} Zip Code: ${this.zipCode} Vip: ${this.vip} Phone number: ${this.phonenumber}`;
+    return `Name: ${this.name} Email: ${this.email} Phone number: ${this.phonenumber} Zip Code: ${this.zipCode} Vip: ${this.vip}`;
 };
 
 subscriberSchema.methods.findLocalSubscribers = function() {

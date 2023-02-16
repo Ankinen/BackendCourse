@@ -52,7 +52,14 @@ router.delete("/users/:id/delete", usersController.delete, usersController.redir
 router.get("/users/:id", usersController.show, usersController.showView);
 
 router.get("/subscribers", subscribersController.index, subscribersController.indexView);
-router.get("subscribers/:id", subscribersController.show, subscribersController.showView);
+router.get("/subscribers/new", subscribersController.new);
+router.post("/subscribers/create", subscribersController.create, subscribersController.redirectView);
+
+router.get("/subscribers/:id/edit", subscribersController.edit);
+router.put("/subscribers/:id/update", subscribersController.update, subscribersController.redirectView);
+router.delete("/subscribers/:id/delete", subscribersController.delete, subscribersController.redirectView);
+
+router.get("/subscribers/:id", subscribersController.show, subscribersController.showView);
 
 router.get("/courses", coursesController.index, coursesController.indexView);
 

@@ -15,9 +15,30 @@
     </td>
   </tr>
   <tr>
+    <th>Phone Number</th>
+    <td>
+      <%= subscriber.phonenumber%>
+    </td>
+  </tr>
+  <tr>
     <th>Zip Code</th>
     <td>
       <%= subscriber.zipCode%>
     </td>
   </tr>
+  <tr>
+    <th>Vip</th>
+    <td>
+      <%= subscriber.vip%>
+    </td>
+  </tr>
 </table>
+
+<div>
+  <a class="button" href="/subscribers">View all subscribers</a>
+
+  <a class="button" href="<%=`/subscribers/${subscriber._id}/edit`%>">Edit Subscriber Details</a>
+
+  <a class="button" href="<%= `/subscribers/${subscriber._id}/delete?_method=DELETE` %>" 
+    onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
+</div>
