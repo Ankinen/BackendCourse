@@ -110,7 +110,7 @@ module.exports ={
             });
     },
     delete: (req, res, next) => {
-        let subscriberId = rew.params.id;
+        let subscriberId = req.params.id;
         Subscriber.findByIdAndRemove(subscriberId)
             .then(() => {
                 res.locals.redirect = `/subscribers`;

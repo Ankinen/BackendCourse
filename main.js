@@ -13,6 +13,25 @@ const mongoose = require("mongoose");
 const Subscriber = require("./models/subscriber");
 const Recipe = require("./models/recipe");
 const methodOverride = require("method-override");
+const course = require("./models/course");
+
+const expressSession = require("express-session");
+const cookieParser = require("cookie-parser");
+const connectFlash = require("connect-flash");
+
+router.use(cookieParser("secret_passcode"));
+router.use(expressSession({
+    secret: "secret_passcode", 
+    cookie: {maxAge: 4000000},
+    resave: false,
+    saveUninitialized: false
+}));
+router.use(connectFlash());
+
+router.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
+    next();
+});
 
 // This lets mongoose know that we want to use native ES6 promises
 mongoose.Promise = global.Promise;
@@ -62,6 +81,14 @@ router.delete("/subscribers/:id/delete", subscribersController.delete, subscribe
 router.get("/subscribers/:id", subscribersController.show, subscribersController.showView);
 
 router.get("/courses", coursesController.index, coursesController.indexView);
+router.get("courses/new", coursesController.new);
+router.post("/courses/create", coursesController.create, coursesController.redirectView);
+
+router.get("/courses/:id/edit", coursesController.edit);
+router.put("/courses/:id/update", coursesController.update, coursesController.redirectView);
+router.delete("/courses/:id/delete", coursesController.delete, coursesController.redirectView);
+
+router.get("/courses/:id", coursesController.show, coursesController.showView);
 
 router.post("/subscribe", subscribersController.saveSubscriber);
 
