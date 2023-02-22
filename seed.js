@@ -1,58 +1,115 @@
 "use strict";
 
-const mongoose = require("mongoose");
-const Subscriber = require("./models/subscriber");
+const mongoose = require("mongoose"),
+  Subscriber = require("./models/subscriber"),
+  User = require("./models/user"),
+  Course = require("./models/course");
 
-mongoose.connect("mongodb://localhost:27017/recipe_db", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost/recipe_db");
 mongoose.connection;
 
-let contacts = [
-    {
-        name: "Annukka Kinnari",
-        email: "annukka@kinnari.com",
-        zipCode: 12345,
-        vip: true,
-        phonenumber: "04012343322"
+// USERS
+const users = [
+  {
+    name: {
+      first: "Annukka",
+      last: "Kinnari"
     },
-    {
-        name: "Chef Eggplant",
-        email: "chef@eggplant.com",
-        zipCode: 20331,
-        vip: true,
-        phonenumber: "05023454433"
+    email: "annukka@kinnari.com",
+    zipCode: 70000,
+    password: "Annukka"
+  },
+  {
+    name: {
+      first: "Chef",
+      last: "Eggplant"
     },
-    {
-        name: "Professor Souffle",
-        email: "professor@souffle.com",
-        zipCode: 19103,
-        vip: true,
-        phonenumber: "04434565544"
-    }
+    email: "eggplant@recipeapp.com",
+    zipCode: 20331,
+    password: "12345"
+  },
+  {
+    name: {
+      first: "Professor",
+      last: "Souffle"
+    },
+    email: "souffle@recipeapp.com",
+    zipCode: 19103,
+    password: "12345"
+  }
 ];
 
-Subscriber.deleteMany()
+let createSubscriber = (c, resolve) => {
+  Subscriber.create({
+    name: `${c.name.first} ${c.name.last}`,
+    email: c.email,
+    zipCode: c.zipCode
+  }).then(sub => {
+    console.log(`CREATED SUBSCRIBER: ${sub.name}`);
+    resolve(sub);
+  });
+};
+
+users.reduce(
+    (promiseChain, next) => {
+        return promiseChain.then(() => new Promise(resolve => {
+          createSubscriber(next, resolve);
+        })
+    );
+  },
+  Subscriber.remove({})
     .exec()
     .then(() => {
-        console.log("Subscriber data is empty!");
-    });
-
-let commands = [];
-
-contacts.forEach(c => {
-    commands.push(Subscriber.create({
-        name: c.name,
-        email: c.email,
-        zipCode: c.zipCode,
-        vip: c.vip,
-        phonenumber: c.phonenumber
-    }));
-});
-
-Promise.all(commands)
-    .then(r => {
-        console.log(JSON.stringify(r));
-        mongoose.connection.close();
+      console.log("Subscriber data is empty!");
     })
-    .catch(error => {
-        console.log(`ERROR: ${error}`);
-    });
+)
+.then(r => {
+    console.log(JSON.stringify(r));
+    mongoose.connection.close();
+  })
+  .catch(error => {
+    console.log(`ERROR: ${error}`);
+  });
+
+let registerUser = (u, resolve) => {
+  User.register(
+    {
+      name: {
+        first: u.name.first,
+        last: u.name.last
+      },
+      email: u.email,
+      zipCode: u.zipCode,
+      password: u.password
+    },
+    u.password,
+    (error, user) => {
+      console.log(`USER created: ${user.fullName}`);
+      resolve(user);
+    }
+  );
+};
+
+users
+  .reduce(
+    (promiseChain, next) => {
+      return promiseChain.then(
+        () =>
+          new Promise(resolve => {
+            registerUser(next, resolve);
+          })
+      );
+    },
+    User.remove({})
+      .exec()
+      .then(() => {
+        console.log("User data is empty!");
+      })
+  )
+  .then(r => {
+    console.log(JSON.stringify(r));
+    mongoose.connection.close();
+  })
+  .catch(error => {
+    console.log(`ERROR: ${error}`);
+  });

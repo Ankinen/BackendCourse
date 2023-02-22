@@ -1,8 +1,9 @@
 "use strict";
 
 const mongoose = require("mongoose");
-const subscriber = require("./subscriber");
 const { Schema } = mongoose;
+const bcrypt = require("bcrypt");
+const passportLocalMongoose = require("passport-local-mongoose");
 const Subscriber = require("./subscriber");
 const userSchema = new Schema({
     name: {
@@ -28,10 +29,6 @@ const userSchema = new Schema({
         type: Number,
         min: [1000, "Zip code too short"],
         max: 99999
-    },
-    password: {
-        type: String,
-        required: true
     },
     courses: [{type: Schema.Types.ObjectId, ref: "Course"}],
     subscribedAccount: {
@@ -68,6 +65,10 @@ userSchema.pre("save", function(next) {
     } else {
         next();
     }
+});
+
+userSchema.plugin(passportLocalMongoose, {
+    usernameField: "email"
 });
 
 module.exports = mongoose.model("User", userSchema);

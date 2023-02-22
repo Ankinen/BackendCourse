@@ -26,6 +26,20 @@
 				<span class="button">Contact</span>
 			</a>
 		</div>
+		<div class="login">
+			<%if (loggedIn) { %>
+				<p>Logged in as 
+					<a href="<%=`/users/${currentUser._id}`%>">
+						<%= currentUser.fullName %>
+					</a>
+					<span class="log-out">
+						<a href="/users/logout">Log Out</a>
+					</span>
+				</p>
+			<% } else { %>
+					<a href="/users/login">Log In</a>
+			<% } %>
+		</div>
 	</div>
 
 	<div class="flashes">
