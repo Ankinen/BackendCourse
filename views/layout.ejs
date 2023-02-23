@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Express Templates</title>
     <link rel="shortcut icon" type="image/png" href="/images/icon.png" />
-    <link rel="stylesheet" href="/css/bootstrap.css">
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/recipeApp.js"></script>
+	<link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/style.css" />
 </head>
 
@@ -25,6 +28,7 @@
 			<a href="/contact">
 				<span class="button">Contact</span>
 			</a>
+			<%- include ('courses/_coursesModal') %>
 		</div>
 		<div class="login">
 			<%if (loggedIn) { %>

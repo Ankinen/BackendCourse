@@ -35,7 +35,7 @@ module.exports ={
             });
     },
     show: (req, res, next) => {
-        let subscriberId = req.param.id;
+        let subscriberId = req.params.id;
         Subscriber.findById(subscriberId)
                 .then(subscriber => {
                     res.locals.subscriber = subscriber;

@@ -16,7 +16,9 @@
     <% subscribers.forEach(subscriber => { %>
     <tr>
       <td>
-        <%= subscriber.name %>
+        <a href="<%= `/subscribers/${subscriber._id}` %> ">
+          <%= subscriber.name %>
+        </a>
       </td>
       <td>
         <%= subscriber.email %>
