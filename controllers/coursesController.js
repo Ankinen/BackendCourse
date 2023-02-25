@@ -74,7 +74,7 @@ module.exports = {
             courseParams = {
                 title: req.body.title,
                 description: req.body.description,
-                items: req.body.items,
+                items: [req.body.items.split(",")],
                 zipCode: req.body.zipCode,
                 cost: req.body.cost
             };

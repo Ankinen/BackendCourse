@@ -32,11 +32,7 @@ module.exports = {
         });
     },
     indexView: (req, res) => {
-        res.render("users/index", {
-            flashMessage: {
-                success: "Loaded all users!"
-            }
-        });
+        res.render("users/index");
     },
     new: (req, res) => {
         res.render("users/new");
@@ -130,7 +126,8 @@ module.exports = {
         successFlash: "Logged in!"
     }),
     validate: (req, res, next) => {
-        req.sanitizeBody("email").normalizeEmail({
+        req.sanitizeBody("email")
+            .normalizeEmail({
             all_lowercase: true
         }).trim();
         req.check("email", "Email is invalid").isEmail();
